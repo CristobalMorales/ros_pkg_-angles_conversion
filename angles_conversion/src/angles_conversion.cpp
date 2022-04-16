@@ -5,7 +5,7 @@
 #include "angles_conversion_srv/rotmat2quat.h"
 #define _USE_MATH_DEFINES
 
-bool convert_quat2zyx(cw1q4_srv::quat2zyx::Request &req, cw1q4_srv::quat2zyx::Response &res)
+bool convert_quat2zyx(angles_conversion_srv::quat2zyx::Request &req, angles_conversion_srv::quat2zyx::Response &res)
 {
     double qx = req.q.x;
     double qy = req.q.y;
@@ -26,7 +26,7 @@ bool convert_quat2zyx(cw1q4_srv::quat2zyx::Request &req, cw1q4_srv::quat2zyx::Re
     den = 1 - 2*(qy*qy + qz*qz);
     res.z.data = std::atan2(num, den);
 }
-bool convert_quat2rodrigues(cw1q4_srv::quat2rodrigues::Request &req, cw1q4_srv::quat2rodrigues::Response &res)
+bool convert_quat2rodrigues(angles_conversion_srv::quat2rodrigues::Request &req, angles_conversion_srv::quat2rodrigues::Response &res)
 {
     double qx = req.q.x;
     double qy = req.q.y;
@@ -39,17 +39,17 @@ bool convert_quat2rodrigues(cw1q4_srv::quat2rodrigues::Request &req, cw1q4_srv::
     res.y.data = (qy/norm)*(2*half_angle);
     res.z.data = (qz/norm)*(2*half_angle);
 }
-bool convert_rotmat2quat(cw1q4_srv::rotmat2quat::Request &req, cw1q4_srv::rotmat2quat::Response &res)
+bool convert_rotmat2quat(angles_conversion_srv::rotmat2quat::Request &req, angles_conversion_srv::rotmat2quat::Response &res)
 {
-    double* x_vect = &req.r1.data[0];
-    double* y_vect = &req.r2.data[0];
-    double* z_vect = &req.r3.data[0];
+    float* x_vect = &(req.r1.data[0]);
+    float* y_vect = &(req.r2.data[0]);
+    float* z_vect = &(req.r3.data[0]);
 
-    double angle = std::acos((x_vect[1] + y_vect[2] + z_vect[3] - 1)/2);
-    double den = 1/(2*std::sin(angle));
-    double u_x = den*(z_vect[2] - y_vect[3]);
-    double u_y = den*(x_vect[3] - z_vect[1]);
-    double u_z = den*(y_vect[1] - x_vect[2]);
+    float angle = std::acos((x_vect[1] + y_vect[2] + z_vect[3] - 1)/2);
+    float den = 1/(2*std::sin(angle));
+    float u_x = den*(z_vect[2] - y_vect[3]);
+    float u_y = den*(x_vect[3] - z_vect[1]);
+    float u_z = den*(y_vect[1] - x_vect[2]);
 
     res.q.w = std::cos(angle/2);
     res.q.x = std::sin(angle/2)*u_x;

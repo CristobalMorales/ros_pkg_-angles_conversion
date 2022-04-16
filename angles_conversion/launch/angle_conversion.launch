@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="rotation_converter" pkg="angles_conversion" type="angles_conversion"/>
+</launch>

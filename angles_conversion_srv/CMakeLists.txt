@@ -13,6 +13,7 @@ add_service_files(
   FILES
   quat2zyx.srv
   quat2rodrigues.srv
+  rotmat2quat.srv
 )
 
 ## Generate messages and services with any dependencies listed here

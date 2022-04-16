@@ -51,13 +51,13 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>angles_conversion_srv</build_depend>
   <build_depend>rostest</build_depend>
-  <!-- <build_depend>roscpp</build_depend> -->
+  <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
   <build_export_depend>angles_conversion_srv</build_export_depend>
-  <!-- <build_export_depend>roscpp</build_export_depend> -->
+  <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <exec_depend>angles_conversion_srv</exec_depend>
-  <!-- <exec_depend>roscpp</exec_depend> -->
+  <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
 
 
