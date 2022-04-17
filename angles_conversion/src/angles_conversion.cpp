@@ -12,7 +12,7 @@ bool convert_quat2zyx(angles_conversion_srv::quat2zyx::Request &req, angles_conv
     double qz = req.q.z;
     double qw = req.q.w;
 
-    double num = 2*(qx*qx + qy*qz);
+    double num = 2*(qw*qx + qy*qz);
     double den = 1 - 2*(qx*qx + qy*qy);
     res.x.data = std::atan2(num, den);
 
@@ -45,16 +45,15 @@ bool convert_rotmat2quat(angles_conversion_srv::rotmat2quat::Request &req, angle
     float* y_vect = &(req.r2.data[0]);
     float* z_vect = &(req.r3.data[0]);
 
-    float angle = std::acos((x_vect[1] + y_vect[2] + z_vect[3] - 1)/2);
-    float den = 1/(2*std::sin(angle));
-    float u_x = den*(z_vect[2] - y_vect[3]);
-    float u_y = den*(x_vect[3] - z_vect[1]);
-    float u_z = den*(y_vect[1] - x_vect[2]);
+    float qw = std::sqrt(1.0 + x_vect[0] + y_vect[1] + z_vect[2])/2;
+    float qx = (y_vect[2] - z_vect[1])/(4*qw);
+    float qy = (z_vect[0] - x_vect[2])/(4*qw);
+    float qz = (x_vect[1] - y_vect[0])/(4*qw);
 
-    res.q.w = std::cos(angle/2);
-    res.q.x = std::sin(angle/2)*u_x;
-    res.q.y = std::sin(angle/2)*u_y;
-    res.q.z = std::sin(angle/2)*u_z;
+    res.q.w = qw;
+    res.q.x = qx;
+    res.q.y = qy;
+    res.q.z = qz;
 }
 
 int main(int argc, char **argv)
