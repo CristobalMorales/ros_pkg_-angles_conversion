@@ -7,6 +7,12 @@
 
 bool convert_quat2zyx(angles_conversion_srv::quat2zyx::Request &req, angles_conversion_srv::quat2zyx::Response &res)
 {
+    /**
+     * @brief Convert from quaternions to z, y and x Euler rotation representation in this order
+     * 
+     * @param req The Request data that contains the quaternion data (q.x, q.y, q.z, q.w)
+     * @param res The response that contains the Euler angles roll, pitch, yaw (x, y, z) in radians
+     */
     double qx = req.q.x;
     double qy = req.q.y;
     double qz = req.q.z;
@@ -28,6 +34,12 @@ bool convert_quat2zyx(angles_conversion_srv::quat2zyx::Request &req, angles_conv
 }
 bool convert_quat2rodrigues(angles_conversion_srv::quat2rodrigues::Request &req, angles_conversion_srv::quat2rodrigues::Response &res)
 {
+    /**
+     * @brief Convert from quaternions to Rodrigues representation
+     * 
+     * @param req The Request data that contains the quaternion data (q.x, q.y, q.z, q.w)
+     * @param res The response that contains the rodrigues angles for rotation (x, y and z) in radians
+     */
     double qx = req.q.x;
     double qy = req.q.y;
     double qz = req.q.z;
@@ -41,6 +53,13 @@ bool convert_quat2rodrigues(angles_conversion_srv::quat2rodrigues::Request &req,
 }
 bool convert_rotmat2quat(angles_conversion_srv::rotmat2quat::Request &req, angles_conversion_srv::rotmat2quat::Response &res)
 {
+    /**
+     * @brief Convert from Matriz rotation to quaternion representation
+     * 
+     * @param req The Request data that contains 3 std_msgs::Float32Multiarray components (r1, r2 and r3)
+     * these vectors represent the column-wise vectors of the rotation matrix
+     * @param res The response that contains the quaternion data (q.x, q.y, q.z, q.w)
+     */
     float* x_vect = &(req.r1.data[0]);
     float* y_vect = &(req.r2.data[0]);
     float* z_vect = &(req.r3.data[0]);
@@ -61,7 +80,6 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "rotation_converter");
     ros::NodeHandle nh;
 
-    //TODO: Define three services
     ros::ServiceServer quat2zyx_server = nh.advertiseService("quat2zyx", convert_quat2zyx);
     ros::ServiceServer quat2rodrigues_server = nh.advertiseService("quat2rodrigues", convert_quat2rodrigues);
     ros::ServiceServer rotmat2quat_server = nh.advertiseService("rotmat2quat", convert_rotmat2quat);
